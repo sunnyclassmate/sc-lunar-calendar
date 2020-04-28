@@ -81,13 +81,25 @@
             dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+<!--      <v-text-field-->
+<!--              flat-->
+<!--              solo-inverted-->
+<!--              hide-details-->
+<!--              prepend-inner-icon="mdi-magnify"-->
+<!--              label="Search"-->
+<!--              @keyup.enter="onEnter"-->
+<!--              v-model="searchText"-->
+<!--      />-->
       <v-text-field
               flat
               solo-inverted
               hide-details
               prepend-inner-icon="mdi-magnify"
-              label="Search"
+              placeholder="Search"
+              @keyup.enter="onEnter"
+              v-model="searchText"
       />
+
     </v-app-bar>
     <v-content>
       <v-container
@@ -98,13 +110,31 @@
                 align="center"
                 justify="center"
         >
+          <HelloWorld></HelloWorld>
         </v-row>
       </v-container>
     </v-content>
+    <v-snackbar
+            v-model="snackbar"
+            :timeout="snackbarTimeout"
+            color="error"
+    >
+      {{ snackbarMessage }}
+      <v-btn
+              dark
+              color="black"
+              text
+              @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
+  import HelloWorld from "@/components/HelloWorld";
+
   export default {
     props: {
       source: String,
@@ -114,44 +144,29 @@
       drawer: null,
       items: [
         { icon: 'mdi-clock', text: 'Home' },
-        // { icon: 'mdi-server-network', text: '인명 DB' },
-        // { icon: 'mdi-view-dashboard', text: 'Dashboard' },
-        // { icon: 'mdi-settings', text: 'Settings' },
         // { icon: 'mdi-contacts', text: 'Contacts' },
-        // { icon: 'mdi-history', text: 'Frequently contacted' },
-        // { icon: 'mdi-content-copy', text: 'Duplicates' },
-        // {
-        //   icon: 'mdi-chevron-up',
-        //   'icon-alt': 'mdi-chevron-down',
-        //   text: 'Labels',
-        //   model: true,
-        //   children: [
-        //     { icon: 'mdi-plus', text: 'Create label' },
-        //   ],
-        // },
-        // {
-        //   icon: 'mdi-chevron-up',
-        //   'icon-alt': 'mdi-chevron-down',
-        //   text: 'More',
-        //   model: false,
-        //   children: [
-        //     { text: 'Import' },
-        //     { text: 'Export' },
-        //     { text: 'Print' },
-        //     { text: 'Undo changes' },
-        //     { text: 'Other contacts' },
-        //   ],
-        // },
+        // { icon: 'mdi-server-network', text: '인명 DB' },
         // { icon: 'mdi-settings', text: 'Settings' },
-        // { icon: 'mdi-message', text: 'Send feedback' },
-        // { icon: 'mdi-help-circle', text: 'Help' },
-        // { icon: 'mdi-cellphone-link', text: 'App downloads' },
-        // { icon: 'mdi-keyboard', text: 'Go to the old version' },
       ],
+      searchText: '',
+      snackbar: false,
+      snackbarMessage: '알맞은 검색어가 아닙니다.',
+      snackbarTimeout: 1000
+      // { icon: 'mdi-view-dashboard', text: 'Dashboard' },: '',
     }),
     created () {
       // this.$vuetify.theme.dark = true
       this.$vuetify.theme.light = true
     },
+    components:{
+      HelloWorld
+    },
+    methods: {
+      onEnter: function() {
+        var integer = parseInt(this.searchText, 10);
+        console.log(integer)
+        this.snackbar = true
+      }
+    }
   }
 </script>
