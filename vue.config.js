@@ -1,9 +1,6 @@
-// vue.config.js
-// module.exports = {
-//     publicPath: process.env.NODE_ENV === 'production'
-//         ? '/sc-lunar-calendar/'
-//         : '/'
-// }
 module.exports = {
-    publicPath: '/sc-lunar-calendar/'
+  "publicPath": "/sc-lunar-calendar/",
+  "transpileDependencies": [
+    "vuetify"
+  ]
 }
