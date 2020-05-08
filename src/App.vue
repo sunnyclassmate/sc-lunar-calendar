@@ -102,38 +102,76 @@
 
     </v-app-bar>
     <v-content>
+<!--      <v-container-->
+<!--              class="fill-height"-->
+<!--              fluid-->
+<!--      >-->
       <v-container
-              class="fill-height"
               fluid
       >
-        <v-row
-                align="center"
-                justify="center"
-        >
-          <HelloWorld></HelloWorld>
-        </v-row>
+        <Saju :value="searchDtm"></Saju>
+<!--        <v-row-->
+<!--                align="center"-->
+<!--                justify="center"-->
+<!--        >-->
+<!--          <span>{{moment(date).format('YYYY-MM-DD')}}</span>-->
+<!--          <span>{{JSON.stringify(lunar.solar2Lunar('19720126'))}}</span>-->
+<!--        </v-row>-->
       </v-container>
     </v-content>
     <v-snackbar
-            v-model="snackbar"
-            :timeout="snackbarTimeout"
+            v-model="snackbar.visible"
+            :timeout="snackbar.timeout"
             color="error"
     >
-      {{ snackbarMessage }}
+      {{ snackbar.message }}
       <v-btn
               dark
               color="black"
               text
-              @click="snackbar = false"
+              @click="snackbar.visible = false"
       >
         Close
       </v-btn>
     </v-snackbar>
+    <v-footer
+            padless
+            app
+
+    >
+      <v-card
+              class="flex"
+              flat
+              tile
+              color="red darken-3"
+      >
+        <v-card-title>
+<!--          <strong class="subheading">Get connected with us on social networks!</strong>-->
+
+          <v-spacer></v-spacer>
+
+<!--          <v-btn-->
+<!--                  v-for="icon in footerIcons"-->
+<!--                  :key="icon"-->
+<!--                  class="mx-4"-->
+<!--                  dark-->
+<!--                  icon-->
+<!--          >-->
+<!--            <v-icon size="24px">{{ icon }}</v-icon>-->
+<!--          </v-btn>-->
+        </v-card-title>
+
+<!--        <v-card-text class="py-2 white&#45;&#45;text text-center">-->
+<!--          {{ new Date().getFullYear() }} — <strong>Vuetify</strong>-->
+<!--        </v-card-text>-->
+      </v-card>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-  import HelloWorld from "@/components/HelloWorld";
+  // import HelloWorld from "@/components/HelloWorld";
+  import Saju from "@/components/Saju";
 
   export default {
     props: {
@@ -143,30 +181,52 @@
       dialog: false,
       drawer: null,
       items: [
-        { icon: 'mdi-clock', text: 'Home' },
+        { icon: 'mdi-home-variant', text: 'Home' },
+        // { icon: 'mdi-calendar-clock', text: 'Home' },
+        // { icon: 'mdi-account-network', text: 'Contacts' },
         // { icon: 'mdi-contacts', text: 'Contacts' },
+        { icon: 'mdi-wrench', text: 'Settings' },
         // { icon: 'mdi-server-network', text: '인명 DB' },
         // { icon: 'mdi-settings', text: 'Settings' },
       ],
+      footerIcons: [
+        'mdi-facebook',
+        // 'mdi-twitter',
+        // 'mdi-linkedin',
+        // 'mdi-instagram',
+      ],
       searchText: '',
-      snackbar: false,
-      snackbarMessage: '알맞은 검색어가 아닙니다.',
-      snackbarTimeout: 1000
+      snackbar:{ visible:false, message:'알맞은 검색어가 아닙니다.', timeout: 1000},
+      // snackbar: false,
+      // snackbarMessage: '알맞은 검색어가 아닙니다.',
+      // snackbarTimeout: 1000
       // { icon: 'mdi-view-dashboard', text: 'Dashboard' },: '',
+      searchDtm: '',
+      searchName: '',
+      searchIlju: '',
     }),
     created () {
       // this.$vuetify.theme.dark = true
       this.$vuetify.theme.light = true
+      this.searchText = this.moment(new Date()).format('YYYYMMDDHHmm')
+      this.searchDtm = this.searchText
+
+      console.log(this.lunar.solar2Lunar('197201261130'))
     },
     components:{
-      HelloWorld
+      // HelloWorld
+      Saju
     },
     methods: {
       onEnter: function() {
-        var integer = parseInt(this.searchText, 10);
-        console.log(integer)
-        this.snackbar = true
-      }
+        const regexNumber = /\d{8,12}/g;
+        this.searchDtm = (this.searchText.match(regexNumber) || [])[0]
+        console.log(this.searchDtm)
+        if(!this.searchDtm ){
+          this.snackbar.visible = true
+        }
+      },
+
     }
   }
 </script>

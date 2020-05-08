@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
+import moment from 'moment'
+import lunar from '@sunnyclassmate/sc-lunar-core'
+
+Vue.prototype.moment = moment
+Vue.prototype.lunar = lunar
 
 Vue.config.productionTip = false
+
 
 new Vue({
   vuetify,
