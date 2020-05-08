@@ -1,9 +1,16 @@
 # sc-lunar-calendar
 
+
 ## Project setup
 ```
 npm install
 ```
+
+### Core project latest install
+```
+npm install @sunnyclassmate/sc-lunar-core@latest --save
+```
+
 
 ### Compiles and hot-reloads for development
 ```
@@ -20,6 +27,13 @@ npm run build
 npm run lint
 ```
 
+### Deploy
+```
+npm run deploy
+```
+
+
+## Project Webpage
 https://sunnyclassmate.github.io/sc-lunar-calendar/
 
 ### Customize configuration
